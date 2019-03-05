@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhku.zcj.library.mapper.BookInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zhku.zcj.library.model.BookInfo" >
+    <id column="book_id" property="bookId" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="publisher" property="publisher" jdbcType="VARCHAR" />
+    <result column="book_name" property="bookName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="publish_count" property="publishCount" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="sale_count" property="saleCount" jdbcType="INTEGER" />
+    <result column="cover_img" property="coverImg" jdbcType="VARCHAR" />
+    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="collect_count" property="collectCount" jdbcType="INTEGER" />
+    <result column="view_count" property="viewCount" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="last_editor" property="lastEditor" jdbcType="VARCHAR" />
+    <result column="ISBN" property="isbn" jdbcType="VARCHAR" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="sort_type" property="sortType" jdbcType="VARCHAR" />
+    <result column="resource" property="resource" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    book_id, author, publisher, book_name, type, publish_time, summary, publish_count, 
+    create_time, sale_count, cover_img, comment_count, collect_count, view_count, update_time, 
+    last_editor, ISBN,sort_num,sort_type,resource
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from book_info
+    where book_id = #{bookId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBookListBySortTypeAndResource" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from book_info
+    where resource = #{resource,jdbcType=VARCHAR} and sort_type = #{sortType,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByIsbn" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select *
+    from book_info
+    where isbn = #{isbn,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from book_info
+    where book_id = #{bookId,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="deleteBySortTypeAndResource" parameterType="java.lang.String" >
+    delete from book_info
+    where sort_type = #{sortType,jdbcType=VARCHAR} and resource = #{resource,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.zhku.zcj.library.model.BookInfo" >
+    insert into book_info (book_id, author, publisher, 
+      book_name, type, publish_time, 
+      summary, publish_count, create_time, 
+      sale_count, cover_img, comment_count, 
+      collect_count, view_count, update_time, 
+      last_editor, ISBN,sort_num,sort_type,resource)
+    values (#{bookId,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{publisher,jdbcType=VARCHAR}, 
+      #{bookName,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{publishTime,jdbcType=TIMESTAMP}, 
+      #{summary,jdbcType=VARCHAR}, #{publishCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{saleCount,jdbcType=INTEGER}, #{coverImg,jdbcType=VARCHAR}, #{commentCount,jdbcType=INTEGER}, 
+      #{collectCount,jdbcType=INTEGER}, #{viewCount,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{lastEditor,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR}, #{sortNum,jdbcType=INTEGER},#{sortType,jdbcType=VARCHAR},
+      #{resource,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhku.zcj.library.model.BookInfo" >
+    insert into book_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="publisher != null" >
+        publisher,
+      </if>
+      <if test="bookName != null" >
+        book_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="publishTime != null" >
+        publish_time,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="publishCount != null" >
+        publish_count,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="saleCount != null" >
+        sale_count,
+      </if>
+      <if test="coverImg != null" >
+        cover_img,
+      </if>
+      <if test="commentCount != null" >
+        comment_count,
+      </if>
+      <if test="collectCount != null" >
+        collect_count,
+      </if>
+      <if test="viewCount != null" >
+        view_count,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="lastEditor != null" >
+        last_editor,
+      </if>
+      <if test="isbn != null" >
+        ISBN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="bookName != null" >
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="publishCount != null" >
+        #{publishCount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleCount != null" >
+        #{saleCount,jdbcType=INTEGER},
+      </if>
+      <if test="coverImg != null" >
+        #{coverImg,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCount != null" >
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="collectCount != null" >
+        #{collectCount,jdbcType=INTEGER},
+      </if>
+      <if test="viewCount != null" >
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastEditor != null" >
+        #{lastEditor,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null" >
+        #{isbn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhku.zcj.library.model.BookInfo" >
+    update book_info
+    <set >
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        publisher = #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="bookName != null" >
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="publishTime != null" >
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="publishCount != null" >
+        publish_count = #{publishCount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleCount != null" >
+        sale_count = #{saleCount,jdbcType=INTEGER},
+      </if>
+      <if test="coverImg != null" >
+        cover_img = #{coverImg,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCount != null" >
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="collectCount != null" >
+        collect_count = #{collectCount,jdbcType=INTEGER},
+      </if>
+      <if test="viewCount != null" >
+        view_count = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastEditor != null" >
+        last_editor = #{lastEditor,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null" >
+        ISBN = #{isbn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where book_id = #{bookId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhku.zcj.library.model.BookInfo" >
+    update book_info
+    set author = #{author,jdbcType=VARCHAR},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      book_name = #{bookName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      summary = #{summary,jdbcType=VARCHAR},
+      publish_count = #{publishCount,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      sale_count = #{saleCount,jdbcType=INTEGER},
+      cover_img = #{coverImg,jdbcType=VARCHAR},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      collect_count = #{collectCount,jdbcType=INTEGER},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      last_editor = #{lastEditor,jdbcType=VARCHAR},
+      ISBN = #{isbn,jdbcType=VARCHAR}
+    where book_id = #{bookId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from book_info
+  </select>
+</mapper>
